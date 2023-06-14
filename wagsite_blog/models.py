@@ -4,18 +4,17 @@ from django.db import models
 from django.db import models
 from django.db.models import F
 from django import forms
+from wagtail import hooks
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 
-from wagtail.core.blocks import CharBlock, ChoiceBlock, StructBlock
-from wagtail.core import hooks
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 
-from wagtail.core.models import Page, Orderable
-from wagtail.core.fields import RichTextField
+from wagtail.fields import RichTextField
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.models import Page, Orderable
 from wagtail.search import index
 
 from wagtail.snippets.models import register_snippet
@@ -62,6 +61,9 @@ class BlogPage(Page):
         else:
             return None
 
+    def get_tags(self):
+        return BlogPageTag.objects.all()
+
     @hooks.register("before_serve_page")
     def increment_view_count(page, request, serve_args, serve_kwargs):
         if page.specific_class == BlogPage:
@@ -97,7 +99,7 @@ class BlogPageGalleryImage(Orderable):
     caption = models.CharField(blank=True, max_length=250)
 
     panels = [
-        ImageChooserPanel('image'),
+        FieldPanel('image'),
         FieldPanel('caption'),
     ]
 
@@ -134,7 +136,7 @@ class BlogCategory(models.Model):
 
     panels = [
         FieldPanel('name'),
-        ImageChooserPanel('icon'),
+        FieldPanel('icon'),
     ]
 
     def __str__(self):

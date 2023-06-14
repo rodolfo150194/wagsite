@@ -3,11 +3,9 @@ from django.db import models
 # Create your models here.
 from django.db import models
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel, InlinePanel
+from wagtail.models import Orderable
 
-from wagtail.core.models import Orderable
 from wagtail.snippets.models import register_snippet
-from wagtail.core.models import Orderable
-from wagtail.core.fields import RichTextField
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 from wagtail.search import index
@@ -34,7 +32,7 @@ class Link(Orderable):
     link_board  = ParentalKey('wagsite_links.LinkBoard', on_delete=models.SET_NULL, blank=True, null=True, related_name='links')
 
     panels = [FieldPanel('link_text'), FieldPanel('link_url'), FieldPanel('link_title'), FieldPanel('link_target'),
-              ImageChooserPanel('link_icon'), FieldPanel('link_order')]
+              FieldPanel('link_icon'), FieldPanel('link_order')]
 
     def __str__(self):
         return self.link_text

@@ -1,4 +1,5 @@
 # from wagtail.core import blocks
+from django.db import models
 from wagtail import blocks
 from wagtail.images import blocks as b
 
@@ -7,7 +8,6 @@ from wagsite_streams.models import IconFontawesome
 
 class TitleIconAndSimpleRichtextBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=True, help_text='Añade tu título')
-    # image = blocks.
     icon = blocks.CharBlock(required=True, help_text='Añade tu icono font-awesome')
     text = blocks.RichTextBlock(required=True, help_text='Añade el Texto adicional')
     button_page = blocks.PageChooserBlock(help_text="Pagina")
@@ -17,16 +17,6 @@ class TitleIconAndSimpleRichtextBlock(blocks.StructBlock):
         icon = "edit"
         label = "Título, Icono y Texto"
 
-class TitleIconAndSimpleRichtextBlock2(blocks.StructBlock):
-    title = blocks.CharBlock(required=True, help_text='Añade tu título')
-    icon = blocks.CharBlock(required=True, help_text='Añade tu icono font-awesome')
-    # ~ text = blocks.RichTextBlock(required=True, help_text='Añade el Texto adicional')
-    button_page = blocks.PageChooserBlock(help_text="Pagina")
-
-    class Meta:
-        template = "wagsite_streams/title_and_text_block.html"
-        icon = "edit"
-        label = "Título, Icono y Texto"
 
 
 class RichtextBlock(blocks.RichTextBlock):
