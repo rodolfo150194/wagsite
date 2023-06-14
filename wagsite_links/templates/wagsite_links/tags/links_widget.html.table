@@ -1,0 +1,21 @@
+{% load wagtailimages_tags %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-link">&nbsp;</i><b>Enlaces Externos</b></h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-list">
+            {% for link in links %}
+                <tr>
+                <td class="align-text-center" style="width: 100px;">
+                    {% image link.link_icon  original class='img-responsive' alt=link.link_title %}
+                </td>
+                <td style="vertical-align: middle;">
+                    {{ link.link_text }}
+                </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+

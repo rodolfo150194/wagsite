@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load wagsite_blog_tags  %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+
+<section id="blog-content" class="container-fluid">
+    <div class="row-soft">
+        <div class="col-md-9">
+            <h1>{{ page.title }}</h1>
+            <p class="meta">{{ page.date }}</p>
+            <div class="intro">{{ page.intro }}</div>
+            <div class="body text-justify">{{ page.body|richtext }}</div>
+            <br>
+            <div class="row">
+                {% for item in page.gallery_images.all %}
+                    <div class="col-md-3">
+                        {% image item.image original class="img-responsive img-rounded" %}
+                        <p><i>{{ item.caption }}</i></p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row" style="margin: 20px auto;">
+                <p style="font-size: 16px;"><b>Compartir:</b></p>
+                <a class="btn btn-default" href="https://twitter.com/intent/tweet?source=sharethiscom&text={{ page.news_title }}&url={{ request.build_absolute_uri }}" target="_blank" style="color: #1DA1F2;"><i class="fa fa-twitter fa-2x"></i> Twitter</a>
+                <a class="btn btn-default"href="https://www.facebook.com/sharer.php?u={{ request.build_absolute_uri }}&t={{ page.news_title }}" target="_blank" style="color: #4267B2;"><i class="fa fa-facebook fa-2x"></i> Facebook</a>
+            </div>
+        </div>
+        <div class="col-md-3 hidden-sm hidden-xs">
+            {% blog_visited_widget %}
+{#            {% links_all_widget %}#}
+        </div>
+    </div>
+</section>
+{% blog_carousel %}
+<div class="container hidden-md hidden-lg">
+{#    {% links_all %}#}
+</div>
+
+{% endblock %}

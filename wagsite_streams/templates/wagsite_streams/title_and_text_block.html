@@ -1,0 +1,21 @@
+{% load static %}
+
+<div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+    <div class="service-item">
+        <div class="img">
+            <img src="{% static 'img/services-1.jpg' %}" class="img-fluid" alt="">
+        </div>
+        <div class="details position-relative">
+            <div class="icon">
+                <i class="fa {% if self.icon %}{{ self.icon }}{% else %}fa-cogs{% endif %}"></i>
+            </div>
+            <a href="{{ self.button_page.url }}" class="stretched-link">
+                <h3>{{ self.title }}</h3>
+            </a>
+            <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores iure
+                perferendis.</p>
+
+        </div>
+    </div>
+</div>
+{#</div>#}

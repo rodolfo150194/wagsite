@@ -1,0 +1,29 @@
+{% load wagtailimages_tags %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-link">&nbsp;</i><b>Enlaces Externos</b></h3>
+  </div>
+  <div class="panel-body">
+     <div class="row">
+         <div class="blog-timeline">
+            {% for link in links %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="{{ link.link_url }}" class="align-middle" title="{{ link.link_title }}" target="{{ link.link_target }}">
+                        <div class="col-xs-4">
+                            {% image link.link_icon  original class='img-responsive' alt=link.link_title %}
+                        </div>
+                        <div class="col-xs-8" style="vertical-align: middle;">
+                            {{ link.link_text }}
+                        </div>
+                        </a>
+                    </div>
+                 </div>
+                 {% if not forloop.last %}
+                 <hr/>
+                 {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+  </div>
+</div>

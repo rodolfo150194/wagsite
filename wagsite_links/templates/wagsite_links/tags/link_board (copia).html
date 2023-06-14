@@ -1,0 +1,22 @@
+{% load wagtailimages_tags %}
+<div class="card cardwidget">
+  <div class="card-header blueheader">
+      <i class="fa fa-link">&nbsp;</i>Enlaces
+  </div>
+    <div class="card-body">
+      <table class="table table-list">
+          {% for link in links %}
+            <tr>
+              <td class="align-text-top" style="width: 35px;">
+                    {% image link.link_icon  max-90x50 class='img-sm' alt=link.link_title %}
+                </td>
+                <td>
+                    <a href="{{ link.link_url }}" title="{{ link.link_title }}" target="{{ link.link_target }}">
+                        {{ link.link_text }}
+                    </a>
+                </td>
+            </tr>
+          {% endfor %}
+      </table>
+  </div>
+</div>

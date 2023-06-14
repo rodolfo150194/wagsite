@@ -1,0 +1,35 @@
+<!-- bLOG Start -->
+{% load static wagtailcore_tags wagtailimages_tags %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-link">&nbsp;</i><b>Recomendados</b></h3>
+  </div>
+  <div class="panel-body">
+     <div class="row">
+         <div class="blog-timeline">
+            {% for post in noticias %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="{% pageurl post %}">
+                            <div class="col-xs-6">
+                               {% with post.main_image as main_image %}
+                                    {% if main_image %}
+                                        {% image main_image original class="img-responsive img-rounded" %}
+                                    {% endif %}
+                               {% endwith %}
+                            </div>
+                            <div class="col-xs-6">
+                               <span> {{ post.title }}</span>
+                               <span class="fa fa-calendar"> {{ post.date }}</span>
+                            </div>
+                        </a>
+                    </div>
+                 </div>
+                 {% if not forloop.last %}
+                 <hr/>
+                 {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+  </div>
+</div>
