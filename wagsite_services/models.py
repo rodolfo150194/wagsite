@@ -2,22 +2,21 @@ from django.db import models
 
 # Create your models here.
 from django.db import models
+from wagtail import blocks
 from wagtail.admin.panels import FieldPanel
 
 from wagtail.fields import StreamField, RichTextField
+from wagtail.images.blocks import ImageChooserBlock
 from wagtail.models import Page
 
-from wagsite_streams import blocks
+from wagsite_teams.models import SocialNetwork
 
 
 # Create your models here.
 class ServicesIndexPage(Page):
     max_count = 1
-    intro = RichTextField(blank=True)
 
-    content_panels = Page.content_panels + [
-        FieldPanel('intro', classname="full")
-    ]
+    subpage_types = ['Services']
 
     class Meta:
         verbose_name = "Listado de Servicios"
@@ -25,30 +24,21 @@ class ServicesIndexPage(Page):
 
 
 class Services(Page):
-    template = "wagsite_services/services.html"
+    body = StreamField([
+        ('servicio', blocks.StructBlock([
+            ('title', blocks.CharBlock(required=True, help_text='Añade tu título')),
+            ('icon', blocks.CharBlock(required=True, help_text='Añade tu icono de awesome')),
+            ('text', blocks.CharBlock(required=True, help_text='Añade una descripcion')),
+            ('image', ImageChooserBlock(label="Image"))
+        ], icon='user')
+         ),
 
-    content = StreamField(
-        [
-          ("Servicio", blocks.TitleIconAndSimpleRichtextBlock()),
-        ],
-        null=True,
-        blank=True,
-        use_json_field=True
-    )
+    ], use_json_field=True)
 
-    description = StreamField(
-        [
-          ("Descripcion", blocks.RichtextBlock()),
-        ],
-        null=True,
-        blank=True,
-        use_json_field=True
-    )
 
 
     content_panels = Page.content_panels + [
-        FieldPanel("content"),
-        FieldPanel("description"),
+        FieldPanel("body"),
     ]
 
     class Meta:

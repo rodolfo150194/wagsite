@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags bootstrap5 wagtailimages_tags %}
+{% load static wagtailcore_tags bootstrap5 wagtailimages_tags faq_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
@@ -53,7 +53,49 @@ Delete the line below if you're just getting started and want to remove the welc
         <ol class="carousel-indicators"></ol>
 
     </section>
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
 
+            <div class="section-header">
+                <h2>About Us</h2>
+                <p>Architecto nobis eos vel nam quidem vitae temporibus voluptates qui hic deserunt iusto omnis nam
+                    voluptas asperiores sequi tenetur dolores incidunt enim voluptatem magnam cumque fuga.</p>
+            </div>
+
+            <div class="row g-4 g-lg-5" data-aos="fade-up" data-aos-delay="200">
+
+                <div class="col-lg-5">
+                    <div class="about-img">
+                        <img src="{% static 'img/about.jpg' %}" class="img-fluid" alt="">
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <h3 class="pt-0 pt-lg-5">Neque officiis dolore maiores et exercitationem quae est seda lidera pat
+                        claero</h3>
+
+                    <!-- Tabs -->
+                    <ul class="nav nav-pills mb-3">
+                        {% for block in about.body %}
+                            <li><a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="pill"
+                                   href="#tab-{{ block.value.order }}">{{ block.value.name }}</a></li>
+                        {% endfor %}
+                        {#                        <li><a class="nav-link" data-bs-toggle="pill" href="#tab2">Voluptates</a></li>#}
+                        {#                        <li><a class="nav-link" data-bs-toggle="pill" href="#tab3">Corrupti</a></li>#}
+                    </ul><!-- End Tabs -->
+                    <!-- Tab Content -->
+                    <div class="tab-content">
+                        {% for block_descripcion in about.body %}
+                            <div class="tab-pane fade show {% if forloop.first %}active{% endif %}"
+                                 id="tab-{{ block_descripcion.value.order }}">
+                                <p class="fst-italic">{{ block_descripcion.value.descripcion }}</p>
+                            </div><!-- End Tab 1 Content -->
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section id="services" class="services">
         <div class="container" data-aos="fade-up">
 
@@ -62,9 +104,23 @@ Delete the line below if you're just getting started and want to remove the welc
                 <p>Servicios de alta calidad y con un alto valor agregado.</p>
             </div>
             <div class="row gy-5">
-                {% for block in servicios %}
-                    {% include_block block.content %}
-                    {#                    {% include "wagsite_streams/title_and_text_block.html" with block=block.content %}#}
+                {% for block in servicios.body %}
+                    <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="service-item">
+                            <div class="img">
+                                <img src="{{ block.value.image.file.url }}" class="img-fluid" alt="">
+                            </div>
+                            <div class="details position-relative">
+                                <div class="icon">
+                                    <i class="fa fa-{{ block.value.icon }} text-white"></i>
+                                </div>
+                                <a href="#" class="stretched-link">
+                                    <h3>{{ block.value.title }}</h3>
+                                </a>
+                                <p>{{ block.value.text }}</p>
+                            </div>
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
         </div>
@@ -95,312 +151,102 @@ Delete the line below if you're just getting started and want to remove the welc
 
         </div>
     </section>
-    <section id="about" class="about">
-        <div class="container" data-aos="fade-up">
-
-            <div class="section-header">
-                <h2>About Us</h2>
-                <p>Architecto nobis eos vel nam quidem vitae temporibus voluptates qui hic deserunt iusto omnis nam
-                    voluptas asperiores sequi tenetur dolores incidunt enim voluptatem magnam cumque fuga.</p>
-            </div>
-
-            <div class="row g-4 g-lg-5" data-aos="fade-up" data-aos-delay="200">
-
-                <div class="col-lg-5">
-                    <div class="about-img">
-                        <img src="assets/img/about.jpg" class="img-fluid" alt="">
-                    </div>
-                </div>
-
-                <div class="col-lg-7">
-                    <h3 class="pt-0 pt-lg-5">Neque officiis dolore maiores et exercitationem quae est seda lidera pat
-                        claero</h3>
-
-                    <!-- Tabs -->
-                    <ul class="nav nav-pills mb-3">
-                        <li><a class="nav-link active" data-bs-toggle="pill" href="#tab1">Saepe fuga</a></li>
-                        <li><a class="nav-link" data-bs-toggle="pill" href="#tab2">Voluptates</a></li>
-                        <li><a class="nav-link" data-bs-toggle="pill" href="#tab3">Corrupti</a></li>
-                    </ul><!-- End Tabs -->
-
-                    <!-- Tab Content -->
-                    <div class="tab-content">
-
-                        <div class="tab-pane fade show active" id="tab1">
-
-                            <p class="fst-italic">Consequuntur inventore voluptates consequatur aut vel et. Eos
-                                doloribus expedita. Sapiente atque consequatur minima nihil quae aspernatur quo suscipit
-                                voluptatem.</p>
-
-                            <div class="d-flex align-items-center mt-4">
-                                <i class="bi bi-check2"></i>
-                                <h4>Repudiandae rerum velit modi et officia quasi facilis</h4>
-                            </div>
-                            <p>Laborum omnis voluptates voluptas qui sit aliquam blanditiis. Sapiente minima commodi
-                                dolorum non eveniet magni quaerat nemo et.</p>
-
-                            <div class="d-flex align-items-center mt-4">
-                                <i class="bi bi-check2"></i>
-                                <h4>Incidunt non veritatis illum ea ut nisi</h4>
-                            </div>
-                            <p>Non quod totam minus repellendus autem sint velit. Rerum debitis facere soluta tenetur.
-                                Iure molestiae assumenda sunt qui inventore eligendi voluptates nisi at. Dolorem quo
-                                tempora. Quia et perferendis.</p>
-
-                            <div class="d-flex align-items-center mt-4">
-                                <i class="bi bi-check2"></i>
-                                <h4>Omnis ab quia nemo dignissimos rem eum quos..</h4>
-                            </div>
-                            <p>Eius alias aut cupiditate. Dolor voluptates animi ut blanditiis quos nam. Magnam officia
-                                aut ut alias quo explicabo ullam esse. Sunt magnam et dolorem eaque magnam odit enim
-                                quaerat. Vero error error voluptatem eum.</p>
-
-                        </div><!-- End Tab 1 Content -->
-
-                        <div class="tab-pane fade show" id="tab2">
-
-                            <p class="fst-italic">Consequuntur inventore voluptates consequatur aut vel et. Eos
-                                doloribus expedita. Sapiente atque consequatur minima nihil quae aspernatur quo suscipit
-                                voluptatem.</p>
-
-                            <div class="d-flex align-items-center mt-4">
-                                <i class="bi bi-check2"></i>
-                                <h4>Repudiandae rerum velit modi et officia quasi facilis</h4>
-                            </div>
-                            <p>Laborum omnis voluptates voluptas qui sit aliquam blanditiis. Sapiente minima commodi
-                                dolorum non eveniet magni quaerat nemo et.</p>
-
-                            <div class="d-flex align-items-center mt-4">
-                                <i class="bi bi-check2"></i>
-                                <h4>Incidunt non veritatis illum ea ut nisi</h4>
-                            </div>
-                            <p>Non quod totam minus repellendus autem sint velit. Rerum debitis facere soluta tenetur.
-                                Iure molestiae assumenda sunt qui inventore eligendi voluptates nisi at. Dolorem quo
-                                tempora. Quia et perferendis.</p>
-
-                            <div class="d-flex align-items-center mt-4">
-                                <i class="bi bi-check2"></i>
-                                <h4>Omnis ab quia nemo dignissimos rem eum quos..</h4>
-                            </div>
-                            <p>Eius alias aut cupiditate. Dolor voluptates animi ut blanditiis quos nam. Magnam officia
-                                aut ut alias quo explicabo ullam esse. Sunt magnam et dolorem eaque magnam odit enim
-                                quaerat. Vero error error voluptatem eum.</p>
-
-                        </div><!-- End Tab 2 Content -->
-
-                        <div class="tab-pane fade show" id="tab3">
-
-                            <p class="fst-italic">Consequuntur inventore voluptates consequatur aut vel et. Eos
-                                doloribus expedita. Sapiente atque consequatur minima nihil quae aspernatur quo suscipit
-                                voluptatem.</p>
-
-                            <div class="d-flex align-items-center mt-4">
-                                <i class="bi bi-check2"></i>
-                                <h4>Repudiandae rerum velit modi et officia quasi facilis</h4>
-                            </div>
-                            <p>Laborum omnis voluptates voluptas qui sit aliquam blanditiis. Sapiente minima commodi
-                                dolorum non eveniet magni quaerat nemo et.</p>
-
-                            <div class="d-flex align-items-center mt-4">
-                                <i class="bi bi-check2"></i>
-                                <h4>Incidunt non veritatis illum ea ut nisi</h4>
-                            </div>
-                            <p>Non quod totam minus repellendus autem sint velit. Rerum debitis facere soluta tenetur.
-                                Iure molestiae assumenda sunt qui inventore eligendi voluptates nisi at. Dolorem quo
-                                tempora. Quia et perferendis.</p>
-
-                            <div class="d-flex align-items-center mt-4">
-                                <i class="bi bi-check2"></i>
-                                <h4>Omnis ab quia nemo dignissimos rem eum quos..</h4>
-                            </div>
-                            <p>Eius alias aut cupiditate. Dolor voluptates animi ut blanditiis quos nam. Magnam officia
-                                aut ut alias quo explicabo ullam esse. Sunt magnam et dolorem eaque magnam odit enim
-                                quaerat. Vero error error voluptatem eum.</p>
-
-                        </div><!-- End Tab 3 Content -->
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-    </section>
     <section id="portfolio" class="portfolio" data-aos="fade-up">
 
         <div class="container">
 
             <div class="section-header">
-                <h2>Portfolio</h2>
+                <h2>Productos</h2>
                 <p>Non hic nulla eum consequatur maxime ut vero memo vero totam officiis pariatur eos dolorum sed fug
                     dolorem est possimus esse quae repudiandae. Dolorem id enim officiis sunt deserunt esse soluta
                     consequatur quaerat</p>
             </div>
 
         </div>
-
-        <div class="container-fluid" data-aos="fade-up" data-aos-delay="200">
+        <div class="container" data-aos="fade-up" data-aos-delay="200">
 
             <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry"
                  data-portfolio-sort="original-order">
 
                 <ul class="portfolio-flters">
+
                     <li data-filter="*" class="filter-active">All</li>
-                    <li data-filter=".filter-app">App</li>
-                    <li data-filter=".filter-product">Product</li>
-                    <li data-filter=".filter-branding">Branding</li>
-                    <li data-filter=".filter-books">Books</li>
+                    {% for c in categorias_productos %}
+                        <li data-filter=".filter-{{ c.name }}">{{ c.name }}</li>
+                    {% endfor %}
+
                 </ul><!-- End Portfolio Filters -->
 
                 <div class="row g-0 portfolio-container">
+                    {% for p in productos %}
+                        <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-{{ p.category.name }}">
+                        <div class="post-img text-center">
+                            {% with p.main_image as main_image %}
+                                {% if main_image %}
+                                    {% image main_image original class="img-fluid img" %}
+                                {% endif %}
 
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-app">
-                        <img src="assets/img/portfolio/app-1.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>App 1</h4>
-                            <a href="assets/img/portfolio/app-1.jpg" title="App 1" data-gallery="portfolio-gallery"
-                               class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div><!-- End Portfolio Item -->
+                                {#                            <img src="{{ p.images.value.image.file.url }}" class="img-fluid"#}
+                                {#                                 alt="{{ img.value.image.file.title }}">#}
 
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-product">
-                        <img src="assets/img/portfolio/product-1.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Product 1</h4>
-                            <a href="assets/img/portfolio/product-1.jpg" title="Product 1"
-                               data-gallery="portfolio-gallery" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
+                                <div class="portfolio-info">
+                                    <h4>{{ p.name }}</h4>
+                                    <a href="{{ main_image.file.url }}"
+                                       data-gallery="portfolio-gallery"
+                                       class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                                    <a href="{% pageurl p %}" title="Mas Detalles" class="details-link"><i
+                                            class="bi bi-link-45deg"></i></a>
+                                </div>
+                            {% endwith %}
                         </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-branding">
-                        <img src="assets/img/portfolio/branding-1.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Branding 1</h4>
-                            <a href="assets/img/portfolio/branding-1.jpg" title="Branding 1"
-                               data-gallery="portfolio-gallery" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-books">
-                        <img src="assets/img/portfolio/books-1.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Books 1</h4>
-                            <a href="assets/img/portfolio/books-1.jpg" title="Branding 1"
-                               data-gallery="portfolio-gallery" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-app">
-                        <img src="assets/img/portfolio/app-2.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>App 2</h4>
-                            <a href="assets/img/portfolio/app-2.jpg" title="App 2" data-gallery="portfolio-gallery"
-                               class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-product">
-                        <img src="assets/img/portfolio/product-2.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Product 2</h4>
-                            <a href="assets/img/portfolio/product-2.jpg" title="Product 2"
-                               data-gallery="portfolio-gallery" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-branding">
-                        <img src="assets/img/portfolio/branding-2.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Branding 2</h4>
-                            <a href="assets/img/portfolio/branding-2.jpg" title="Branding 2"
-                               data-gallery="portfolio-gallery" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-books">
-                        <img src="assets/img/portfolio/books-2.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Books 2</h4>
-                            <a href="assets/img/portfolio/books-2.jpg" title="Branding 2"
-                               data-gallery="portfolio-gallery" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-app">
-                        <img src="assets/img/portfolio/app-3.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>App 3</h4>
-                            <a href="assets/img/portfolio/app-3.jpg" title="App 3" data-gallery="portfolio-gallery"
-                               class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-product">
-                        <img src="assets/img/portfolio/product-3.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Product 3</h4>
-                            <a href="assets/img/portfolio/product-3.jpg" title="Product 3"
-                               data-gallery="portfolio-gallery" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-branding">
-                        <img src="assets/img/portfolio/branding-3.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Branding 3</h4>
-                            <a href="assets/img/portfolio/branding-3.jpg" title="Branding 2"
-                               data-gallery="portfolio-gallery" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-books">
-                        <img src="assets/img/portfolio/books-3.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Books 3</h4>
-                            <a href="assets/img/portfolio/books-3.jpg" title="Branding 3"
-                               data-gallery="portfolio-gallery" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div><!-- End Portfolio Item -->
+                        </div><!-- End Portfolio Item -->
+                    {% endfor %}
 
                 </div><!-- End Portfolio Container -->
 
             </div>
 
         </div>
+    </section>
+    <section id="recent-blog-posts" class="recent-blog-posts">
+
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-header">
+                <h2>Blog</h2>
+                <p>Recent posts form our Blog</p>
+            </div>
+
+            <div class="row">
+                {% for post in noticias %}
+                    <div class="col-lg-4" data-aos="fade-up"
+                         data-aos-delay="{% if forloop.first %}200{% elif forloop.counter == 2 %}400{% else %}600{% endif %}">
+                        <div class="post-box">
+                            <div class="post-img">
+                                {#                  <img src="{{ post.image.file.url }}" class="img-fluid" alt="">#}
+                                {% with post.main_image as main_image %}
+                                    {% if main_image %}
+                                        {% image main_image original class="img-fluid img" %}
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div class="meta">
+                                <span class="post-date">{{ post.date }}</span>
+                                <span class="post-author"> / {{ post.author|upper }}</span>
+                            </div>
+                            <h3 class="post-title">{{ post.title }}</h3>
+                            <p>{{ post.body|richtext }}</p>
+                            <a href="{% pageurl post %}" class="readmore stretched-link"><span>Ver Mas</span><i
+                                    class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+
     </section>
     <section id="team" class="team">
         <div class="container" data-aos="fade-up">
@@ -412,73 +258,39 @@ Delete the line below if you're just getting started and want to remove the welc
             </div>
 
             <div class="row gy-5">
-                {% for team in teams %}
+                {% for team in teams.body %}
                     <div class="col-xl-4 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="200">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="assets/img/team/team-1.jpg" class="img-fluid" alt="">
+                                {#                                <img src="#" class="img-fluid" alt="{{ team.value.image.file.title }}">#}
+                                {% image team.value.image min-500x200 class="img-fluid" %}
                             </div>
                             <div class="member-info">
                                 <div class="social">
-                                    {% for rs in team.social_media_set.all %}
-                                        <a href=""><i class="bi bi-twitter"></i></a>
+                                    {% for rs in team.value.social_media %}
+                                        <a href="{{ rs.url }}"><i class="bi bi-{{ rs.name }}"></i></a>
                                     {% endfor %}
-{#                                    <a href=""><i class="bi bi-facebook"></i></a>#}
-{#                                    <a href=""><i class="bi bi-instagram"></i></a>#}
-{#                                    <a href=""><i class="bi bi-linkedin"></i></a>#}
+                                    {#                                    <a href=""><i class="bi bi-facebook"></i></a>#}
+                                    {#                                    <a href=""><i class="bi bi-instagram"></i></a>#}
+                                    {#                                    <a href=""><i class="bi bi-linkedin"></i></a>#}
                                 </div>
-                                <h4>{{ team.name }}</h4>
-                                <span>{{ team.role }}</span>
+                                <h4>{{ team.value.name }}</h4>
+                                <span>{{ team.value.role }}</span>
                             </div>
                         </div>
                     </div><!-- End Team Member -->
                 {% endfor %}
-{#                <div class="col-xl-4 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="400">#}
-{#                    <div class="team-member">#}
-{#                        <div class="member-img">#}
-{#                            <img src="assets/img/team/team-2.jpg" class="img-fluid" alt="">#}
-{#                        </div>#}
-{#                        <div class="member-info">#}
-{#                            <div class="social">#}
-{#                                <a href=""><i class="bi bi-twitter"></i></a>#}
-{#                                <a href=""><i class="bi bi-facebook"></i></a>#}
-{#                                <a href=""><i class="bi bi-instagram"></i></a>#}
-{#                                <a href=""><i class="bi bi-linkedin"></i></a>#}
-{#                            </div>#}
-{#                            <h4>Sarah Jhonson</h4>#}
-{#                            <span>Product Manager</span>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div><!-- End Team Member -->#}
-{##}
-{#                <div class="col-xl-4 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="600">#}
-{#                    <div class="team-member">#}
-{#                        <div class="member-img">#}
-{#                            <img src="assets/img/team/team-3.jpg" class="img-fluid" alt="">#}
-{#                        </div>#}
-{#                        <div class="member-info">#}
-{#                            <div class="social">#}
-{#                                <a href=""><i class="bi bi-twitter"></i></a>#}
-{#                                <a href=""><i class="bi bi-facebook"></i></a>#}
-{#                                <a href=""><i class="bi bi-instagram"></i></a>#}
-{#                                <a href=""><i class="bi bi-linkedin"></i></a>#}
-{#                            </div>#}
-{#                            <h4>William Anderson</h4>#}
-{#                            <span>CTO</span>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div><!-- End Team Member -->#}
 
             </div>
 
         </div>
     </section>
     <section id="faq" class="faq">
-        <div class="container-fluid" data-aos="fade-up">
+        <div class="container" data-aos="fade-up">
 
             <div class="row gy-4">
 
-                <div class="col-lg-7 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1">
+                <div class="col-lg-12 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1">
 
                     <div class="content px-xl-5">
                         <h3>Frequently Asked <strong>Questions</strong></h3>
@@ -489,103 +301,29 @@ Delete the line below if you're just getting started and want to remove the welc
                     </div>
 
                     <div class="accordion accordion-flush px-xl-5" id="faqlist">
-
-                        <div class="accordion-item" data-aos="fade-up" data-aos-delay="200">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#faq-content-1">
-                                    <i class="bi bi-question-circle question-icon"></i>
-                                    Non consectetur a erat nam at lectus urna duis?
-                                </button>
-                            </h3>
-                            <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                <div class="accordion-body">
-                                    Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet
-                                    non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor
-                                    purus non.
+                        {% for faq in faqs.body %}
+                            <div class="accordion-item" data-aos="fade-up"
+                                 data-aos-delay="{{ forloop.counter|multiply:100 }}">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#faq-content-{{ faq.id |remove_comilla }}">
+                                        <i class="bi bi-question-circle question-icon"></i>
+                                        {{ faq.value.pregunta }}?
+                                    </button>
+                                </h3>
+                                <div id="faq-content-{{ faq.id |remove_comilla }}" class="accordion-collapse collapse"
+                                     data-bs-parent="#faqlist">
+                                    <div class="accordion-body">
+                                        {{ faq.value.respuesta }}.
+                                    </div>
                                 </div>
-                            </div>
-                        </div><!-- # Faq item-->
-
-                        <div class="accordion-item" data-aos="fade-up" data-aos-delay="300">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#faq-content-2">
-                                    <i class="bi bi-question-circle question-icon"></i>
-                                    Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?
-                                </button>
-                            </h3>
-                            <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                <div class="accordion-body">
-                                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
-                                    velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend
-                                    donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in
-                                    cursus turpis massa tincidunt dui.
-                                </div>
-                            </div>
-                        </div><!-- # Faq item-->
-
-                        <div class="accordion-item" data-aos="fade-up" data-aos-delay="400">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#faq-content-3">
-                                    <i class="bi bi-question-circle question-icon"></i>
-                                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi?
-                                </button>
-                            </h3>
-                            <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                <div class="accordion-body">
-                                    Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus
-                                    pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit.
-                                    Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis
-                                    tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
-                                </div>
-                            </div>
-                        </div><!-- # Faq item-->
-
-                        <div class="accordion-item" data-aos="fade-up" data-aos-delay="500">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#faq-content-4">
-                                    <i class="bi bi-question-circle question-icon"></i>
-                                    Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?
-                                </button>
-                            </h3>
-                            <div id="faq-content-4" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                <div class="accordion-body">
-                                    <i class="bi bi-question-circle question-icon"></i>
-                                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
-                                    velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend
-                                    donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in
-                                    cursus turpis massa tincidunt dui.
-                                </div>
-                            </div>
-                        </div><!-- # Faq item-->
-
-                        <div class="accordion-item" data-aos="fade-up" data-aos-delay="600">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#faq-content-5">
-                                    <i class="bi bi-question-circle question-icon"></i>
-                                    Tempus quam pellentesque nec nam aliquam sem et tortor consequat?
-                                </button>
-                            </h3>
-                            <div id="faq-content-5" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                <div class="accordion-body">
-                                    Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in
-                                    est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl
-                                    suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
-                                </div>
-                            </div>
-                        </div><!-- # Faq item-->
+                            </div><!-- # Faq item-->
+                        {% endfor %}
 
                     </div>
 
                 </div>
 
-                <div class="col-lg-5 align-items-stretch order-1 order-lg-2 img"
-                     style='background-image: url("assets/img/faq.jpg");'>&nbsp;
-                </div>
             </div>
 
         </div>

@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "wagsite_teams",
     "wagsite_faq",
     "wagsite_blog",
-    "wagsite_porfolio",
+    "wagsite_productos",
     "wagsite_events",
     "wagsite_links",
     "wagsite_services",

@@ -7,7 +7,7 @@
         </div>
         <div class="details position-relative">
             <div class="icon">
-                <i class="fa {% if self.icon %}{{ self.icon }}{% else %}fa-cogs{% endif %}"></i>
+                <i class="fa fa-{% if self.icon %}{{ self.icon }}{% else %}fa-cogs{% endif %}"></i>
             </div>
             <a href="{{ self.button_page.url }}" class="stretched-link">
                 <h3>{{ self.title }}</h3>

@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.db import models
 
 # Create your models here.
@@ -33,6 +35,20 @@ class BlogIndexPage(Page):
         verbose_name = "Listado de Artículos"
         verbose_name_plural = "Listados de Artículos"
 
+    def get_context(self, request):
+        page = request.GET.get('page', 1)
+        all_posts = BlogPage.objects.live()
+        context = super(BlogIndexPage, self).get_context(request)
+
+        paginator = Paginator(all_posts, 1)  # Show 10 posts per page
+
+        posts = paginator.get_page(page)
+        context['posts'] = posts
+        context['page_active'] = int(page)
+        context['paginator'] = paginator
+
+        return context
+
 
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey(
@@ -52,7 +68,13 @@ class BlogPage(Page):
     intro = models.CharField(max_length=250, blank=True)
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,blank=True)
     categories = ParentalManyToManyField('wagsite_blog.BlogCategory', blank=True)
+
+    # def save(self, *args, **kwargs):
+    #     if not self.author_id:
+    #         self.author_id = self.get_latest_revision().user_id
+    #     super(BlogPage, self).save(*args, **kwargs)
 
     def main_image(self):
         gallery_item = self.gallery_images.first()
