@@ -82,15 +82,16 @@ class ProductoPage(Page):
     #         self.author_id = self.get_latest_revision().user_id
     #     super(BlogPage, self).save(*args, **kwargs)
 
-    def main_image(self):
-        gallery_item = self.gallery_images.first()
-        if gallery_item:
-            return gallery_item.image
+    def get_first_image(self):
+        first_image = self.gallery_images.first()
+        if first_image:
+            return first_image.image
         else:
             return None
 
-    # def get_tags(self):
-    #     return ProductoPageTag.objects.all()
+    def get_other_images(self):
+        return self.gallery_images.exclude(pk=self.get_first_image().pk)
+
 
     @hooks.register("before_serve_page")
     def increment_view_count(page, request, serve_args, serve_kwargs):

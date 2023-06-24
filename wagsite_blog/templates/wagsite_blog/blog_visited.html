@@ -2,12 +2,12 @@
 
 {% load static wagtailcore_tags wagtailimages_tags %}
 <div class="sidebar-item recent-posts">
-    <h3 class="sidebar-title">Recent Posts</h3>
+    <h3 class="sidebar-title">Post Recientes</h3>
 
     <div class="mt-3">
         {% for post in noticias %}
             <div class="post-item {% if forloop.first %}mt-3{% endif %}">
-                {% with post.main_image as main_image %}
+                {% with post.get_first_image as main_image %}
                     {% if main_image %}
                         {% image main_image fill-150x60 class="flex-shrink-0"  %}
                     {% endif %}

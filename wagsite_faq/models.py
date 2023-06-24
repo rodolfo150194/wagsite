@@ -10,10 +10,12 @@ from wagtail.models import Page, Orderable
 # Create your models here.
 class Faq(Orderable):
     page = ParentalKey('FaqPage', related_name='team_members')
+    intro = RichTextField(blank=True)
     pregunta = models.CharField(max_length=255)
     respuesta = models.CharField(max_length=255)
 
     panels = [
+        FieldPanel('intro'),
         FieldPanel('pregunta'),
         FieldPanel('respuesta'),
     ]

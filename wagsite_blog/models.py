@@ -4,7 +4,7 @@ from django.db import models
 
 # Create your models here.
 from django.db import models
-from django.db.models import F
+from django.db.models import F, Q
 from django import forms
 from wagtail import hooks
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
@@ -36,18 +36,36 @@ class BlogIndexPage(Page):
         verbose_name_plural = "Listados de Artículos"
 
     def get_context(self, request):
+        tag = request.GET.get('tag')
+        buscar = request.GET.get('buscar')
         page = request.GET.get('page', 1)
-        all_posts = BlogPage.objects.live()
         context = super(BlogIndexPage, self).get_context(request)
+        if tag:
+            all_posts_tags = BlogPage.objects.filter(tags__name=tag).live()
+            paginator = Paginator(all_posts_tags, 6)
+            context['tag'] = tag
+        elif buscar:
+            all_posts_buscar = BlogPage.objects.filter(Q(intro__icontains=buscar))
+            paginator = Paginator(all_posts_buscar, 6)
+        else:
+            all_posts = BlogPage.objects.live()
+            paginator = Paginator(all_posts, 6)
 
-        paginator = Paginator(all_posts, 1)  # Show 10 posts per page
-
+          # Show 10 posts per page
         posts = paginator.get_page(page)
+        cant_post_category = []
+        for cat in BlogCategory.objects.all():
+            cant_post_category.append({'category':cat.name,'cant':cat.blogpage_set.all().count()})
+        print(BlogPageTag.objects.all().values('tag__name'))
+        context['cant_post_category'] = cant_post_category
         context['posts'] = posts
         context['page_active'] = int(page)
         context['paginator'] = paginator
+        context['get_tag'] = BlogPageTag.objects.all().values('tag__name')
 
         return context
+
+
 
 
 class BlogPageTag(TaggedItemBase):
@@ -71,20 +89,19 @@ class BlogPage(Page):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,blank=True)
     categories = ParentalManyToManyField('wagsite_blog.BlogCategory', blank=True)
 
-    # def save(self, *args, **kwargs):
-    #     if not self.author_id:
-    #         self.author_id = self.get_latest_revision().user_id
-    #     super(BlogPage, self).save(*args, **kwargs)
-
-    def main_image(self):
-        gallery_item = self.gallery_images.first()
-        if gallery_item:
-            return gallery_item.image
+    def get_first_image(self):
+        first_image = self.gallery_images.first()
+        if first_image:
+            return first_image.image
         else:
             return None
 
+    def get_other_images(self):
+        return self.gallery_images.exclude(pk=self.get_first_image().pk)
+
+
     def get_tags(self):
-        return BlogPageTag.objects.all()
+        return BlogPageTag.objects.all().values('tag__name')
 
     @hooks.register("before_serve_page")
     def increment_view_count(page, request, serve_args, serve_kwargs):

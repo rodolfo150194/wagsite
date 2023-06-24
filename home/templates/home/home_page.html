@@ -23,7 +23,7 @@ Delete the line below if you're just getting started and want to remove the welc
                     <div class="row justify-content-center gy-6">
 
                         <div class="col-lg-5 col-md-8">
-                            {% with post.main_image as main_image %}
+                            {% with post.get_first_image as main_image %}
                                 {% if main_image %}
                                     {% image main_image original class="img-fluid img" %}
                                 {% endif %}
@@ -170,35 +170,36 @@ Delete the line below if you're just getting started and want to remove the welc
 
                 <ul class="portfolio-flters">
 
-                    <li data-filter="*" class="filter-active">All</li>
+                    <li data-filter="*" class="filter-active">Reciente</li>
                     {% for c in categorias_productos %}
                         <li data-filter=".filter-{{ c.name }}">{{ c.name }}</li>
                     {% endfor %}
+                    <li><a href="/productos">Ver Más</a></li>
 
                 </ul><!-- End Portfolio Filters -->
 
                 <div class="row g-0 portfolio-container">
                     {% for p in productos %}
                         <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-{{ p.category.name }}">
-                        <div class="post-img text-center">
-                            {% with p.main_image as main_image %}
-                                {% if main_image %}
-                                    {% image main_image original class="img-fluid img" %}
-                                {% endif %}
+                            <div class="post-img text-center">
+                                {% with p.get_first_image as main_image %}
+                                    {% if main_image %}
+                                        {% image main_image original class="img-fluid img" %}
+                                    {% endif %}
 
-                                {#                            <img src="{{ p.images.value.image.file.url }}" class="img-fluid"#}
-                                {#                                 alt="{{ img.value.image.file.title }}">#}
+                                    {#                            <img src="{{ p.images.value.image.file.url }}" class="img-fluid"#}
+                                    {#                                 alt="{{ img.value.image.file.title }}">#}
 
-                                <div class="portfolio-info">
-                                    <h4>{{ p.name }}</h4>
-                                    <a href="{{ main_image.file.url }}"
-                                       data-gallery="portfolio-gallery"
-                                       class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                                    <a href="{% pageurl p %}" title="Mas Detalles" class="details-link"><i
-                                            class="bi bi-link-45deg"></i></a>
-                                </div>
-                            {% endwith %}
-                        </div>
+                                    <div class="portfolio-info">
+                                        <h4>{{ p.name }}</h4>
+                                        <a href="{{ main_image.file.url }}"
+                                           data-gallery="portfolio-gallery"
+                                           class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                                        <a href="{% pageurl p %}" title="Mas Detalles" class="details-link"><i
+                                                class="bi bi-link-45deg"></i></a>
+                                    </div>
+                                {% endwith %}
+                            </div>
                         </div><!-- End Portfolio Item -->
                     {% endfor %}
 
@@ -224,7 +225,7 @@ Delete the line below if you're just getting started and want to remove the welc
                         <div class="post-box">
                             <div class="post-img">
                                 {#                  <img src="{{ post.image.file.url }}" class="img-fluid" alt="">#}
-                                {% with post.main_image as main_image %}
+                                {% with post.get_first_image as main_image %}
                                     {% if main_image %}
                                         {% image main_image original class="img-fluid img" %}
                                     {% endif %}
@@ -292,11 +293,10 @@ Delete the line below if you're just getting started and want to remove the welc
 
                 <div class="col-lg-12 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1">
 
-                    <div class="content px-xl-5">
-                        <h3>Frequently Asked <strong>Questions</strong></h3>
+                    <div class="content px-xl-5 text-center">
+                        <h3>Preguntas Frecuentes <strong>Questions</strong></h3>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
+                            {{ faqs.intro |richtext }}
                         </p>
                     </div>
 

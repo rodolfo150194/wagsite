@@ -36,8 +36,6 @@ class SocialNetwork(StructBlock):
 class TeamPage(Page):
     # Campos personalizados
     body = StreamField([
-        ('text', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
         ('team_member', blocks.StructBlock([
             ('name', blocks.CharBlock(max_length=255)),
             ('role', blocks.CharBlock(max_length=255)),
